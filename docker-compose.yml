@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  movie_db:
+    image: postgres
+    container_name: movie_db
+    restart: always
+    ports:
+      - 5432:5432
+      - 9229-9229
+    environment:
+      - POSTGRES_USER=ryan  
+      - POSTGRES_PASSWORD=ryan
+      - POSTGRES_DB=moviedb
+    volumes:
+      - pgdata:/data/postgres
+  app:
+    build: .
+    container_name: moviedb
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/app
+    links:
+      - movie_db
+    depends_on:
+      - movie_db
+
+volumes:
+  pgdata:
+    driver: local
