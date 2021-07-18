@@ -3,36 +3,34 @@ import { inject, injectable } from 'tsyringe'
 import '../../../../shared/container'
 
 @injectable()
-class CreateUserUseCase {
+class UserAccountExists {
   constructor(
     @inject('UsersRepository')
     private usersRepository
   ) {}
 
   async execute({
-    email,
-    name,
-    username,
-    password,
-    age,
-    isAdmin
-  }): Promise<void> {
+    emailOrUsername, 
+    password
+  }): Promise<any> {
     // const userAlreadyExists = await this.usersRepository.findByEmail(email)
 
     //  if (userAlreadyExists) {
     //    throw new Error('User Already Exists')
     //  }
-    const passwordHash = await hash(password, 8)
+
+    //const passwordHash = await hash(password, 8)
     
-    await this.usersRepository.create({
-    email,
-    name,
-    username,
-    passwordHash,
-    age,
-    isAdmin
+    const signAccount = await this.usersRepository.verifyUserAccountSign({
+        emailOrUsername, 
+        password
     })
+
+    if(signAccount != '') {
+        return signAccount;
+    }
+    return false;
   }
 }
 
-export { CreateUserUseCase }
+export { UserAccountExists }

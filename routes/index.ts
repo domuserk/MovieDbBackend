@@ -2,15 +2,18 @@ import { Router } from 'express'
 
 import { CreateUserController } from '../modules/users/useCases/createUser/createUserController'
 
+import { UserAccountExistsController } from '../modules/users/useCases/verifyAccount/userAccountExistsController'
+
 const router = Router();
 
 const createUser = new CreateUserController()
 
-router.get('/login-auth', (req, res) => {
-    res.end('ryan')
-})
+const user = new UserAccountExistsController()
 
-router.post('/create-user', createUser.handle)  
+router.get('/sign', user.handle)
+
+router.post('/sign-up', createUser.handle)  
+
 
 
 export { router }
