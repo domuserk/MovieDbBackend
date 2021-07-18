@@ -1,2 +1,2 @@
 # MovieDbBackend
-Backend for Moviedb project
+Backend for Moviedb project.
