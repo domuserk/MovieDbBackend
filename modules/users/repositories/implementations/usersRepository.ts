@@ -10,11 +10,11 @@ class UsersRepository {
     }
 
     async create({
-        id,
+        id = 'a28d315c-1fc6-408f-9416-bbe3d05f6a0c',
         email,
         name,
         username,
-        password,
+        password = '12345',
         age,
         isAdmin
     }) {
@@ -26,12 +26,23 @@ class UsersRepository {
         password,
         email,
         isAdmin})
+        console.log('name',name)
       await this.repository.save(user)
     }
 
-    async findByEmail({ email }) {
-        return await this.repository.findOne(email);
+    async verifyUserAccountSign({ emailOrUsername, password }) {
+      
+        const resp =  await this.repository
+        .createQueryBuilder("user") 
+        .where(`user.email = '${emailOrUsername}' `,)
+        .execute();
+        
+        return resp;
     }
+
+    // async findByEmail({ email }) {
+    //     return await this.repository.findOne(email);
+    // }
   
 }
 
