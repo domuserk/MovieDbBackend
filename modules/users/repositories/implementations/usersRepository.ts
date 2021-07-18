@@ -28,6 +28,10 @@ class UsersRepository {
         isAdmin})
       await this.repository.save(user)
     }
+
+    async findByEmail({ email }) {
+        return await this.repository.findOne(email);
+    }
   
 }
 
