@@ -1,0 +1,13 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "ryan",
+  "password": "ryan",
+  "database": "moviedb",
+  "migrations": ["./database/migrations/*.ts"],
+  "entities": ["./modules/**/entities/*.ts"],
+  "cli": {
+    "migrationsDir": "./database/migrations"
+  }
+}
