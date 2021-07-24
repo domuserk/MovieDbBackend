@@ -13,14 +13,7 @@ class UserAccountExists {
     emailOrUsername, 
     password
   }): Promise<any> {
-    // const userAlreadyExists = await this.usersRepository.findByEmail(email)
 
-    //  if (userAlreadyExists) {
-    //    throw new Error('User Already Exists')
-    //  }
-
-    //const passwordHash = await hash(password, 8)
-    
     const signAccount = await this.usersRepository.verifyUserAccountSign({
         emailOrUsername, 
         password

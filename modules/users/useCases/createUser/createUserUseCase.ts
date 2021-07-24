@@ -17,18 +17,19 @@ class CreateUserUseCase {
     age,
     isAdmin
   }): Promise<void> {
-    // const userAlreadyExists = await this.usersRepository.findByEmail(email)
+    
+     const userAlreadyExists = await this.usersRepository.findByEmail(email)
+      if (userAlreadyExists) {
+        throw new Error('User Already Exists')
+    }
 
-    //  if (userAlreadyExists) {
-    //    throw new Error('User Already Exists')
-    //  }
     const passwordHash = await hash(password, 8)
     
     await this.usersRepository.create({
     email,
     name,
     username,
-    passwordHash,
+    password: passwordHash,
     age,
     isAdmin
     })
