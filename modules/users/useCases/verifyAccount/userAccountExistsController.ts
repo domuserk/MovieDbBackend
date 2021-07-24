@@ -12,10 +12,12 @@ class UserAccountExistsController {
             const emailOrUsername = resp.emailOrUsername
             const password =  resp.password
             const verifyUserAccount = container.resolve(UserAccountExists)
+  
             const userSign = await verifyUserAccount.execute({
                 emailOrUsername,
                 password
             })
+            
             if(userSign) {
               return response.status(201).json({ sign: true })
             }

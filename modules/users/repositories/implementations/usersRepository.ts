@@ -10,50 +10,55 @@ class UsersRepository {
     }
 
     async create({
-        id = 'a28d315c-1fc6-408f-9416-bbe3d05f6a0c',
+        id,
         email,
         name,
         username,
-        password = '12345',
+        password,
         age,
         isAdmin
     }) {
         const user = await this.repository.create({
         id,
+        email,
         name,
         username,
-        age,
         password,
-        email,
+        age,
         isAdmin})
         console.log('name',name)
+     
       await this.repository.save(user)
     }
 
     async verifyUserAccountSign({ emailOrUsername, password }) {
-
-        let format = "@gmail.com"
-        let isEmail = 'email',
-        isUsername = 'username';
-      
-        const result = emailOrUsername.includes(format) ? await this.createQuerySearchUser(emailOrUsername, isEmail) : await this.createQuerySearchUser(emailOrUsername, isUsername);
-        return result;
+        if(emailOrUsername && password) {
+            let format = "@gmail.com"
+            let isEmail = 'email',
+            isUsername = 'username';
+        
+            const result = emailOrUsername.includes(format) ? await this.createQuerySearchUser(emailOrUsername, isEmail,password) : await this.createQuerySearchUser(emailOrUsername, isUsername, password);
+            return result;
+        }
+        return;
+        
     }
     
-    async createQuerySearchUser(emailOrUsername, type) {
+    async createQuerySearchUser(emailOrUsername, type, password) {
 
         const resp =  await this.repository
         .createQueryBuilder("user") 
-        .where(`user.${type} = '${ emailOrUsername }' `,)
+        .where(`user.${type} = '${ emailOrUsername }' and user.password = ${password}`,)
         .execute();
 
         const result = type == 'email' ? resp : resp;
 
         return result;
     }
-    // async findByEmail({ email }) {
-    //     return await this.repository.findOne(email);
-    // }
+
+     async findByEmail(email: string): Promise<any> {
+        return await this.repository.findOne({email});
+     }
   
 }
 
