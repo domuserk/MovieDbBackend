@@ -1,2 +1,2 @@
 worker: npm run start
-web: ts-node-dev --inspect --respawn --transpile-only src/server.ts
+web: ts-node-dev --inspect --respawn --transpile-only src/server.tsgit 
